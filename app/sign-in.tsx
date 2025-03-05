@@ -1,15 +1,24 @@
-import { View, Text, ScrollView , Image, TouchableOpacity} from 'react-native'
+import { View, Text, ScrollView , Image, TouchableOpacity, Alert} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import images from '@/constants/images'
 import icons from '@/constants/icons'
+import { login } from '@/lib/supabaseClient'
+import { useAuth } from '@/lib/auth-context'
 
 
 
 
 const SignIn = () => {
-    const handleLogin = () => {
-        console.log("Login with Google")
+    const {user, isLoading, error, signIn} = useAuth()
+
+    const handleLogin = async () => {
+        const result = await signIn()
+        if(result){
+            console.log("Login successful")
+        }else {
+            Alert.alert("Login failed")
+        }
     }
   return (
     <SafeAreaView className="bg-white h-full">
